@@ -6,9 +6,11 @@ class CategoryFeed {
   CategoryFeed({this.version, this.encoding, this.feed});
 
   CategoryFeed.fromJson(Map<String, dynamic> json) {
-    version = json['version'];
-    encoding = json['encoding'];
-    feed = json['feed'] != null ? Feed.fromJson(json['feed']) : null;
+    version = json['version'] as String?;
+    encoding = json['encoding'] as String?;
+    feed = json['feed'] != null
+        ? Feed.fromJson(json['feed'] as Map<String, dynamic>)
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +21,11 @@ class CategoryFeed {
       data['feed'] = feed!.toJson();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'CategoryFeed(version: $version, encoding: $encoding, feed: $feed)';
   }
 }
 
@@ -68,46 +75,56 @@ class Feed {
   });
 
   Feed.fromJson(Map<String, dynamic> json) {
-    xmlLang = json['xml:lang'];
-    xmlns = json['xmlns'];
-    xmlnsDcterms = json[r'xmlns$dcterms'];
-    xmlnsThr = json[r'xmlns$thr'];
-    xmlnsApp = json[r'xmlns$app'];
-    xmlnsOpensearch = json[r'xmlns$opensearch'];
-    xmlnsOpds = json[r'xmlns$opds'];
-    xmlnsXsi = json[r'xmlns$xsi'];
-    xmlnsOdl = json[r'xmlns$odl'];
-    xmlnsSchema = json[r'xmlns$schema'];
-    id = json['id'] != null ? Id.fromJson(json['id']) : null;
-    title = json['title'] != null ? Id.fromJson(json['title']) : null;
-    updated = json['updated'] != null ? Id.fromJson(json['updated']) : null;
-    icon = json['icon'] != null ? Id.fromJson(json['icon']) : null;
-    author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    xmlLang = json['xml:lang'] as String?;
+    xmlns = json['xmlns'] as String?;
+    xmlnsDcterms = json[r'xmlns$dcterms'] as String?;
+    xmlnsThr = json[r'xmlns$thr'] as String?;
+    xmlnsApp = json[r'xmlns$app'] as String?;
+    xmlnsOpensearch = json[r'xmlns$opensearch'] as String?;
+    xmlnsOpds = json[r'xmlns$opds'] as String?;
+    xmlnsXsi = json[r'xmlns$xsi'] as String?;
+    xmlnsOdl = json[r'xmlns$odl'] as String?;
+    xmlnsSchema = json[r'xmlns$schema'] as String?;
+    id = json['id'] != null
+        ? Id.fromJson(json['id'] as Map<String, dynamic>)
+        : null;
+    title = json['title'] != null
+        ? Id.fromJson(json['title'] as Map<String, dynamic>)
+        : null;
+    updated = json['updated'] != null
+        ? Id.fromJson(json['updated'] as Map<String, dynamic>)
+        : null;
+    icon = json['icon'] != null
+        ? Id.fromJson(json['icon'] as Map<String, dynamic>)
+        : null;
+    author = json['author'] != null
+        ? Author.fromJson(json['author'] as Map<String, dynamic>)
+        : null;
     if (json['link'] != null) {
       link = <Link>[];
       json['link'].forEach((v) {
-        link!.add(Link.fromJson(v));
+        link!.add(Link.fromJson(v as Map<String, dynamic>));
       });
     }
     opensearchTotalResults = json[r'opensearch$totalResults'] != null
-        ? Id.fromJson(json[r'opensearch$totalResults'])
+        ? Id.fromJson(json[r'opensearch$totalResults'] as Map<String, dynamic>)
         : null;
     opensearchItemsPerPage = json[r'opensearch$itemsPerPage'] != null
-        ? Id.fromJson(json[r'opensearch$itemsPerPage'])
+        ? Id.fromJson(json[r'opensearch$itemsPerPage'] as Map<String, dynamic>)
         : null;
     opensearchStartIndex = json[r'opensearch$startIndex'] != null
-        ? Id.fromJson(json[r'opensearch$startIndex'])
+        ? Id.fromJson(json[r'opensearch$startIndex'] as Map<String, dynamic>)
         : null;
     if (json['entry'] != null) {
-      String? t = json['entry'].runtimeType.toString();
-      if (t == 'List<dynamic>' || t == '_GrowableList<dynamic>') {
+      final String t = json['entry'].runtimeType.toString();
+      try {
         entry = <Entry>[];
         json['entry'].forEach((v) {
-          entry!.add(Entry.fromJson(v));
+          entry!.add(Entry.fromJson(v as Map<String, dynamic>));
         });
-      } else {
+      } catch (_) {
         entry = <Entry>[];
-        entry!.add(Entry.fromJson(json['entry']));
+        entry!.add(Entry.fromJson(json['entry'] as Map<String, dynamic>));
       }
     }
   }
@@ -156,6 +173,11 @@ class Feed {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Feed(xmlLang: $xmlLang, xmlns: $xmlns, xmlnsDcterms: $xmlnsDcterms, xmlnsThr: $xmlnsThr, xmlnsApp: $xmlnsApp, xmlnsOpensearch: $xmlnsOpensearch, xmlnsOpds: $xmlnsOpds, xmlnsXsi: $xmlnsXsi, xmlnsOdl: $xmlnsOdl, xmlnsSchema: $xmlnsSchema, id: $id, title: $title, updated: $updated, icon: $icon, author: $author, link: $link, opensearchTotalResults: $opensearchTotalResults, opensearchItemsPerPage: $opensearchItemsPerPage, opensearchStartIndex: $opensearchStartIndex, entry: $entry)';
+  }
 }
 
 class Id {
@@ -164,13 +186,18 @@ class Id {
   Id({this.t});
 
   Id.fromJson(Map<String, dynamic> json) {
-    t = json[r'$t'];
+    t = json[r'$t'] as String?;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data[r'$t'] = t;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Id(t: $t)';
   }
 }
 
@@ -182,9 +209,15 @@ class Author {
   Author({this.name, this.uri, this.email});
 
   Author.fromJson(Map<String, dynamic> json) {
-    name = json['name'] != null ? Id.fromJson(json['name']) : null;
-    uri = json['uri'] != null ? Id.fromJson(json['uri']) : null;
-    email = json['email'] != null ? Id.fromJson(json['email']) : null;
+    name = json['name'] != null
+        ? Id.fromJson(json['name'] as Map<String, dynamic>)
+        : null;
+    uri = json['uri'] != null
+        ? Id.fromJson(json['uri'] as Map<String, dynamic>)
+        : null;
+    email = json['email'] != null
+        ? Id.fromJson(json['email'] as Map<String, dynamic>)
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -199,6 +232,11 @@ class Author {
       data['email'] = email!.toJson();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Author(name: $name, uri: $uri, email: $email)';
   }
 }
 
@@ -222,13 +260,13 @@ class Link {
   });
 
   Link.fromJson(Map<String, dynamic> json) {
-    rel = json['rel'];
-    type = json['type'];
-    href = json['href'];
-    title = json['title'];
-    opdsActiveFacet = json['opds:activeFacet'];
-    opdsFacetGroup = json['opds:facetGroup'];
-    thrCount = json['thr:count'];
+    rel = json['rel'] as String?;
+    type = json['type'] as String?;
+    href = json['href'] as String?;
+    title = json['title'] as String?;
+    opdsActiveFacet = json['opds:activeFacet'] as String?;
+    opdsFacetGroup = json['opds:facetGroup'] as String?;
+    thrCount = json['thr:count'] as String?;
   }
 
   Map<String, dynamic> toJson() {
@@ -241,6 +279,11 @@ class Link {
     data['opds:facetGroup'] = opdsFacetGroup;
     data['thr:count'] = thrCount;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Link(rel: $rel, type: $type, href: $href, title: $title, opdsActiveFacet: $opdsActiveFacet, opdsFacetGroup: $opdsFacetGroup, thrCount: $thrCount)';
   }
 }
 
@@ -274,49 +317,60 @@ class Entry {
   });
 
   Entry.fromJson(Map<String, dynamic> json) {
-    title = json['title'] != null ? Id.fromJson(json['title']) : null;
-    id = json['id'] != null ? Id.fromJson(json['id']) : null;
+    title = json['title'] != null
+        ? Id.fromJson(json['title'] as Map<String, dynamic>)
+        : null;
+    id = json['id'] != null
+        ? Id.fromJson(json['id'] as Map<String, dynamic>)
+        : null;
     if (json['author'] != null) {
-      if (json['author'].runtimeType.toString() == 'List<dynamic>') {
-        author = Author1.fromJson(json['author'][0]);
-      } else {
-        author = Author1.fromJson(json['author']);
+      try {
+        author = Author1.fromJson(json['author'][0] as Map<String, dynamic>);
+      } catch (_) {
+        author = Author1.fromJson(json['author'] as Map<String, dynamic>);
       }
     }
 
-    published =
-        json['published'] != null ? Id.fromJson(json['published']) : null;
-    updated = json['updated'] != null ? Id.fromJson(json['updated']) : null;
+    published = json['published'] != null
+        ? Id.fromJson(json['published'] as Map<String, dynamic>)
+        : null;
+    updated = json['updated'] != null
+        ? Id.fromJson(json['updated'] as Map<String, dynamic>)
+        : null;
     dctermsLanguage = json[r'dcterms$language'] != null
-        ? Id.fromJson(json[r'dcterms$language'])
+        ? Id.fromJson(json[r'dcterms$language'] as Map<String, dynamic>)
         : null;
     dctermsPublisher = json[r'dcterms$publisher'] != null
-        ? Id.fromJson(json[r'dcterms$publisher'])
+        ? Id.fromJson(json[r'dcterms$publisher'] as Map<String, dynamic>)
         : null;
     dctermsIssued = json[r'dcterms$issued'] != null
-        ? Id.fromJson(json[r'dcterms$issued'])
+        ? Id.fromJson(json[r'dcterms$issued'] as Map<String, dynamic>)
         : null;
-    summary = json['summary'] != null ? Id.fromJson(json['summary']) : null;
+    summary = json['summary'] != null
+        ? Id.fromJson(json['summary'] as Map<String, dynamic>)
+        : null;
     if (json['category'] != null) {
-      String? t = json['category'].runtimeType.toString();
-      if (t.toLowerCase().contains('list')) {
-        category = <Category>[];
+      category = <Category>[];
+      try {
         json['category'].forEach((v) {
-          category!.add(Category.fromJson(v));
+          category!.add(Category.fromJson(v as Map<String, dynamic>));
         });
-      } else {
-        category = <Category>[];
-        category!.add(Category.fromJson(json['category']));
+      } catch (_) {
+        category!.add(
+          Category.fromJson(json['category'] as Map<String, dynamic>),
+        );
       }
     }
     if (json['link'] != null) {
       link = <Link1>[];
-      json['link'].forEach((v) {
-        link!.add(Link1.fromJson(v));
-      });
+      try {
+        json['link'].forEach((v) {
+          link!.add(Link1.fromJson(v as Map<String, dynamic>));
+        });
+      } catch (_) {}
     }
     schemaSeries = json[r'schema$Series'] != null
-        ? SchemaSeries.fromJson(json[r'schema$Series'])
+        ? SchemaSeries.fromJson(json[r'schema$Series'] as Map<String, dynamic>)
         : null;
   }
 
@@ -360,6 +414,11 @@ class Entry {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Entry(title: $title, id: $id, author: $author, published: $published, updated: $updated, dctermsLanguage: $dctermsLanguage, dctermsPublisher: $dctermsPublisher, dctermsIssued: $dctermsIssued, summary: $summary, category: $category, link: $link, schemaSeries: $schemaSeries)';
+  }
 }
 
 class Author1 {
@@ -369,8 +428,12 @@ class Author1 {
   Author1({this.name, this.uri});
 
   Author1.fromJson(Map<String, dynamic> json) {
-    name = json['name'] != null ? Id.fromJson(json['name']) : null;
-    uri = json['uri'] != null ? Id.fromJson(json['uri']) : null;
+    name = json['name'] != null
+        ? Id.fromJson(json['name'] as Map<String, dynamic>)
+        : null;
+    uri = json['uri'] != null
+        ? Id.fromJson(json['uri'] as Map<String, dynamic>)
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -383,6 +446,11 @@ class Author1 {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Author1(name: $name, uri: $uri)';
+  }
 }
 
 class Category {
@@ -393,9 +461,9 @@ class Category {
   Category({this.label, this.term, this.scheme});
 
   Category.fromJson(Map<String, dynamic> json) {
-    label = json['label'];
-    term = json['term'];
-    scheme = json['scheme'];
+    label = json['label'] as String?;
+    term = json['term'] as String?;
+    scheme = json['scheme'] as String?;
   }
 
   Map<String, dynamic> toJson() {
@@ -404,6 +472,11 @@ class Category {
     data['term'] = term;
     data['scheme'] = scheme;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Category(label: $label, term: $term, scheme: $scheme)';
   }
 }
 
@@ -416,10 +489,10 @@ class Link1 {
   Link1({this.type, this.rel, this.title, this.href});
 
   Link1.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    rel = json['rel'];
-    title = json['title'];
-    href = json['href'];
+    type = json['type'] as String?;
+    rel = json['rel'] as String?;
+    title = json['title'] as String?;
+    href = json['href'] as String?;
   }
 
   Map<String, dynamic> toJson() {
@@ -429,6 +502,11 @@ class Link1 {
     data['title'] = title;
     data['href'] = href;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Link1(type: $type, rel: $rel, title: $title, href: $href)';
   }
 }
 
@@ -440,9 +518,9 @@ class SchemaSeries {
   SchemaSeries({this.schemaPosition, this.schemaName, this.schemaUrl});
 
   SchemaSeries.fromJson(Map<String, dynamic> json) {
-    schemaPosition = json['schema:position'];
-    schemaName = json['schema:name'];
-    schemaUrl = json['schema:url'];
+    schemaPosition = json['schema:position'] as String?;
+    schemaName = json['schema:name'] as String?;
+    schemaUrl = json['schema:url'] as String?;
   }
 
   Map<String, dynamic> toJson() {
@@ -451,5 +529,10 @@ class SchemaSeries {
     data['schema:name'] = schemaName;
     data['schema:url'] = schemaUrl;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'SchemaSeries(schemaPosition: $schemaPosition, schemaName: $schemaName, schemaUrl: $schemaUrl)';
   }
 }

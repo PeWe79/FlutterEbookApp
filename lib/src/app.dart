@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ebook_app/src/common/common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logman/logman.dart';
 
 class MyApp extends ConsumerWidget {
   MyApp({super.key});
@@ -13,15 +14,17 @@ class MyApp extends ConsumerWidget {
     final currentAppTheme = ref.watch(currentAppThemeNotifierProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: Strings.appName,
+      title: appName,
       theme: themeData(
-        currentAppTheme.value == CurrentAppTheme.dark
-            ? ThemeConfig.darkTheme
-            : ThemeConfig.lightTheme,
+        currentAppTheme.value == CurrentAppTheme.dark ? darkTheme : lightTheme,
       ),
-      darkTheme: themeData(ThemeConfig.darkTheme),
+      darkTheme: themeData(darkTheme),
       themeMode: currentAppTheme.value?.themeMode,
-      routerConfig: _appRouter.config(),
+      routerConfig: _appRouter.config(
+        navigatorObservers: () => [
+          LogmanNavigatorObserver(),
+        ],
+      ),
     );
   }
 
@@ -32,7 +35,7 @@ class MyApp extends ConsumerWidget {
         theme.textTheme,
       ),
       colorScheme: theme.colorScheme.copyWith(
-        secondary: ThemeConfig.lightAccent,
+        secondary: lightAccent,
       ),
     );
   }
